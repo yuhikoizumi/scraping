@@ -10,9 +10,9 @@ class TopController < ApplicationController
       c = b.chomp
       d = c.gsub("保険付保実績数"," ").split(" ")
       f = d.select{ |x| x.include?("対象") == false }
-      arr = []
+      @arr = []  if n == 1
       number = [] if n == 1
-      if number.empty?
+      if number.blank?
         num = 0
       else
         num = number.inject(:+)
@@ -24,10 +24,10 @@ class TopController < ApplicationController
           eval("#{var} = {}")
           if i == 1
             eval("@box#{num}#{["NAME"]}= x")
-            arr << eval("#{var}")
+            @arr << eval("#{var}")
           end
           if x.include?("&&&&")
-            arr << eval("#{var}")
+            @arr << eval("#{var}")
           end
           next
         else
@@ -56,7 +56,7 @@ class TopController < ApplicationController
       end
       sleep(10)
     end
-    download_csv(arr)
+    download_csv(@arr)
   end
 
   def download_csv(arr)
