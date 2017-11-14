@@ -11,7 +11,12 @@ class TopController < ApplicationController
       d = c.gsub("保険付保実績数"," ").split(" ")
       f = d.select{ |x| x.include?("対象") == false }
       arr = []
-      num = 0
+      number = [] if n == 1
+      if number.empty?
+        num = 0
+      else
+        num = number.inject(:+)
+      end
       f.each.with_index(1) do | x,i |
         if x.include?("&&&&") or i == 1
           num += 1
@@ -44,6 +49,9 @@ class TopController < ApplicationController
           else
              eval("@box#{num}#{["NAME"]}= x")
           end
+        end
+        if i == f.length
+          number << f.length
         end
       end
       sleep(10)
