@@ -9,7 +9,9 @@ class TopController < ApplicationController
       b = @data.gsub("リフォーム保険：","&&&&")
       c = b.chomp
       d = c.gsub("保険付保実績数"," ").split(" ")
-      f = d.select{ |x| x.include?("対象") == false }
+      g = d.select{ |x| x.include?("既存売買保険") == false }
+      h = g.select{ |x| x.include?("大規模修繕工事瑕疵保険") == false }
+      f = h.select{ |x| x.include?("対象") == false }
       @arr = []  if n == 1
       number = [] if n == 1
       if number.blank?
